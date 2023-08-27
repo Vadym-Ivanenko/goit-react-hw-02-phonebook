@@ -22,15 +22,23 @@ export class App extends Component {
   };
 
   addContact = newContact => {
-    this.setState(prevState => ({
-      contacts: [
-        ...prevState.contacts,
-        {
-          id: nanoid(),
-          ...newContact,
-        },
-      ],
-    }));
+    if (
+      this.state.contacts.find(
+        contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
+      )
+    ) {
+      return alert(`${newContact.name} is already in contact.`);
+    } else {
+      return this.setState(prevState => ({
+        contacts: [
+          ...prevState.contacts,
+          {
+            id: nanoid(),
+            ...newContact,
+          },
+        ],
+      }));
+    }
   };
 
   deleteContact = contactId => {
@@ -43,7 +51,7 @@ export class App extends Component {
     const filteredByName = this.state.contacts.filter(contact => {
       return contact.name
         .toLowerCase()
-        .includes(this.state.filter.toLocaleLowerCase());
+        .includes(this.state.filter.toLowerCase());
     });
     return filteredByName;
   };
