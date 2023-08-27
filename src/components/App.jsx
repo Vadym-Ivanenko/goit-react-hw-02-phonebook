@@ -28,17 +28,16 @@ export class App extends Component {
       )
     ) {
       return alert(`${newContact.name} is already in contact.`);
-    } else {
-      return this.setState(prevState => ({
-        contacts: [
-          ...prevState.contacts,
-          {
-            id: nanoid(),
-            ...newContact,
-          },
-        ],
-      }));
     }
+    this.setState(prevState => ({
+      contacts: [
+        ...prevState.contacts,
+        {
+          id: nanoid(),
+          ...newContact,
+        },
+      ],
+    }));
   };
 
   deleteContact = contactId => {
@@ -48,12 +47,11 @@ export class App extends Component {
   };
 
   getFilterContacts = () => {
-    const filteredByName = this.state.contacts.filter(contact => {
+    return this.state.contacts.filter(contact => {
       return contact.name
         .toLowerCase()
         .includes(this.state.filter.toLowerCase());
     });
-    return filteredByName;
   };
 
   render() {
